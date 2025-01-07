@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package job;
+
+service JobService {
+  rpc createJob (CreateJobData) returns (JobResponse);
+  rpc updateJob (UpdateJobData) returns (JobResponse);
+  rpc getList (GetJobsRequest) returns (GetJobsResponse);
+}
+
+message GetJobsResponse {
+  repeated JobResponse jobs = 1;
+}
+
+message GetJobsRequest {
+  int32 userId = 1;
+}
+
+message CreateJobData {
+  int32 userId = 1;    
+  string jobTitle = 2;                
+  string jobDescription = 3;          
+  string address = 4;                
+  string toolsRequired = 5;  
+  double employeeAmount = 6;                  
+  double payment = 7;          
+  string additionalInstructions = 8; 
+  repeated int32 strengths = 9;      
+  repeated int32 skills = 10;        
+  repeated bytes jobImages = 11;     
+  string startDate = 12;
+  string endDate = 13;
+  string valid = 14;
+}
+
+message UpdateJobData {
+  int32 jobId = 1;    
+  string jobTitle = 2;                
+  string jobDescription = 3;          
+  string address = 4;                
+  string toolsRequired = 5;  
+  double employeeAmount = 6;                  
+  double payment = 7;          
+  string additionalInstructions = 8; 
+  repeated int32 strengths = 9;      
+  repeated int32 skills = 10;        
+  repeated bytes jobImages = 11;     
+  string startDate = 12;
+  string endDate = 13;
+  string valid = 14;
+}
+
+message JobResponse { 
+  int32 jobId = 1;    
+  string jobTitle = 2;                
+  string jobDescription = 3;          
+  string address = 4;                
+  string toolsRequired = 5;  
+  double employeeAmount = 6;                  
+  double payment = 7;          
+  string additionalInstructions = 8; 
+  repeated int32 strengths = 9;      
+  repeated int32 skills = 10;        
+  repeated bytes jobImages = 11;     
+  string startDate = 12;
+  string endDate = 13;
+  string valid = 14;   
+}

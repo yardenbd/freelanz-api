@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package job;
+
+import "user.proto"; 
+
+service JobService {
+  rpc createJob (CreateJobData) returns (JobResponse);
+  rpc createJobBulk (BulkCreateJobRequest) returns (BulkCreateJobResponse);
+  rpc updateJob (UpdateJobData) returns (JobResponse);
+  rpc getJobList (GetJobsRequest) returns (GetJobsResponse);
+  rpc getCompletedJobHistory (GetJobsRequest) returns (CompletedJobsHistoryResponse);
+  rpc createCompletedJob (CreateCompletedJobRequest) returns (CompletedJobResponse);
+  rpc getCandidates (GetCandidatesRequest) returns (CandidatesResponse);
+}
+
+message GetCandidatesRequest {
+  int32 jobId = 1;
+}
+
+message CandidatesResponse {
+   repeated user.UserResponse users = 1;
+}
+
+message FoundedJob {
+  int32 id = 1;                 
+  string title = 2;             
+  double payment = 3;           
+  string address = 4;           
+  double distance = 5;          
+  int32 matching_skills = 6;    
+  int32 total_job_skills = 7;   
+  int32 matching_strengths = 8; 
+  int32 total_job_strengths = 9;
+}
+
+message GetJobsResponse {
+  repeated FoundedJob jobs = 1;
+}
+
+message CompletedJobResponse {
+  int32 id = 1;
+  int32 employeeId = 2;
+  int32 jobId = 3;
+  int32 businessId = 4;
+}
+
+message CompletedJobsHistoryResponse {
+  repeated CompletedJobResponse completedJobs = 1;
+}
+
+message GetJobsRequest {
+  int32 userId = 1;
+}
+
+message CreateCompletedJobRequest {
+  int32 employeeId = 1;
+  int32 jobId = 2;
+  int32 businessId = 3;
+}
+
+message BulkCreateJobRequest {
+  repeated CreateJobData jobs = 1; // Array of jobs to create
+}
+
+message BulkCreateJobResponse {
+  repeated JobResponse responses = 1; // Array of responses
+}
+
+message CreateJobData {
+  int32 userId = 1;    
+  string jobTitle = 2;                
+  string jobDescription = 3;          
+  string address = 4;                
+  string toolsRequired = 5;  
+  double employeeAmount = 6;                  
+  double payment = 7;          
+  string additionalInstructions = 8; 
+  repeated int32 strengths = 9;      
+  repeated int32 skills = 10;        
+  repeated bytes jobImages = 11;     
+  string startDate = 12;
+  string endDate = 13;
+  string status = 14;
+  double longitude = 15;
+  double latitude = 16;
+}
+
+message UpdateJobData {
+  int32 jobId = 1;    
+  string jobTitle = 2;                
+  string jobDescription = 3;          
+  string address = 4;                
+  string toolsRequired = 5;  
+  double employeeAmount = 6;                  
+  double payment = 7;          
+  string additionalInstructions = 8; 
+  repeated int32 strengths = 9;      
+  repeated int32 skills = 10;        
+  repeated bytes jobImages = 11;     
+  string startDate = 12;
+  string endDate = 13;
+  string valid = 14;
+}
+
+message JobResponse { 
+  int32 jobId = 1;    
+  string jobTitle = 2;                
+  string jobDescription = 3;          
+  string address = 4;                
+  string toolsRequired = 5;  
+  double employeeAmount = 6;                  
+  double payment = 7;          
+  string additionalInstructions = 8; 
+  repeated int32 strengths = 9;      
+  repeated int32 skills = 10;        
+  repeated bytes jobImages = 11;     
+  string startDate = 12;
+  string endDate = 13;
+  string valid = 14;   
+}

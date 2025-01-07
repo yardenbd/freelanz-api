@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package user;
+import "google/protobuf/timestamp.proto"; // For handling timestamp fields
+
+
+service UserService {
+  rpc RegisterUser (RegisterUserRequest) returns (UserResponse);
+  rpc googleSignIn (RegisterUserGoogle) returns (UserResponse);
+  rpc updateUser (UpdateUserRequest) returns (UserResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+}
+
+message UpdateUserRequest {
+  repeated double strengths = 1;
+  repeated double skills = 2;
+  bytes file = 3;
+  int32 userId = 4;
+  string email = 5;        
+  string name = 6;           
+  string gender = 7;
+  string dateOfBirth = 8;
+  string type = 9;
+}
+
+message RegisterUserRequest {
+  string email = 1;
+  string fullName = 2;
+  string address = 3;
+  string phoneNumber = 4;
+  string role = 5;
+}
+
+message RegisterUserGoogle {
+  string email = 1;
+  string displayName = 2;
+  string address = 3;
+  string phoneNumber = 4;
+  string type = 5; 
+  double longitude = 6;
+  double latitude = 7;
+  repeated int32 strengths = 8;
+  repeated int32 skills = 9;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message Skill {
+  int32 id = 1;
+  string he = 2;
+  string ar = 3;
+  string ru = 4;
+  string en = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  string UserSkillLink = 8; 
+}
+
+message Strength {
+  int32 id = 1;
+  string he = 2;
+  string ar = 3;
+  string ru = 4;
+  string en = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  string UserStrengthLink = 8; 
+}
+
+message UserResponse {
+  int32 id = 1;                
+  string name = 2;      
+  string address = 3;             
+  string email = 4;               
+  double latitude = 5;     
+  double longitude = 6;             
+  string role = 7;         
+  string type = 8;      
+  string gender = 9;  
+  bool isPhoneVerified = 10;  
+  string businessNumber = 11; 
+  string phoneNumber = 12;          
+  string dateOfBirth = 13;
+  repeated Skill skills = 14;
+  repeated Strength strengths = 15;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+

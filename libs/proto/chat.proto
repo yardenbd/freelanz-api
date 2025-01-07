@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package chat;
+
+service ChatService {
+  rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+  rpc sendMessage(SendMessageRequest) returns (SendMessageResponse);
+  rpc createChat(CreateChatRequest) returns (CreatedChatResponse);
+}
+
+message CreateChatRequest {
+  int32 participantId = 1;
+  int32 chatCreatorId = 2;
+}
+
+message CreatedChatResponse {
+  int32 chatId = 1;
+}
+
+message GetMessagesRequest {
+  string chatId = 1;
+  string userId = 2;
+}
+
+message GetMessagesResponse {
+  repeated ChatMessage messages = 1;
+}
+
+message SendMessageRequest {
+  int32 senderId = 1;
+  int32 receiverId = 2;
+  string content = 3;
+}
+
+message SendMessageResponse {
+  SendMessageRequest message = 1;
+}
+
+message ChatMessage {
+  string senderId = 1;
+  string content = 2;
+  string timestamp = 3;
+}

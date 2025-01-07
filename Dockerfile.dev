@@ -1,0 +1,21 @@
+# Use the official Node.js image
+FROM node:21-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Install Nest CLI globally for development
+RUN npm install -g @nestjs/cli
+
+# Copy the application source code (will be overridden by bind mount)
+COPY . .
+
+# Expose the development port
+EXPOSE 3000
+
+# Start the app in watch mode for development
+CMD ["npm", "run", "start:dev"]

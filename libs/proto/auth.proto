@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package auth;
+
+import "user.proto"; 
+
+service AuthService {
+  rpc RegisterAuth (RegisterAuthRequest) returns (AuthResponse);
+  rpc googleSignIn (RegisterAuthGoogle) returns (AuthResponse);
+  rpc refreshToken (VerifyToken) returns (AuthResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc sendOtp (SendOtpRequest) returns (SendOtpResponse);
+  rpc validateOtp (ValidateOtpRequest) returns (ValidateOtpResponse);
+  rpc loadUser (LoadUserRequest) returns (LoadUserResponse);
+  rpc appleSignIn (AppleSignInRequest) returns (AuthResponse);
+}
+
+message LoadUserResponse {
+  user.UserResponse user = 1;
+}
+
+message LoadUserRequest {
+  int32 userId = 1;
+}
+
+message ValidateOtpResponse {
+  string message = 1;
+}
+
+message FullName {
+  string givenName = 1;
+  string namePrefix = 2;
+  string middleName = 3;
+  string nameSuffix = 4;
+  string nickname = 5;
+  string familyName = 6;
+}
+
+message AppleSignInRequest {
+  string user = 1;
+  int32 realUserStatus = 2;
+  string identityToken = 3;
+  FullName fullName = 4;
+  string authorizationCode = 5;
+  string state = 6;
+  string email = 7;
+}
+
+message SendOtpRequest {
+  string phoneNumber = 1;
+}
+
+message ValidateOtpRequest {
+  string phoneNumber = 1;
+  string code = 2;
+}
+
+message SendOtpResponse {
+  string verificationToken = 1;
+}
+
+message VerifyToken {
+  string refreshToken = 1;
+}
+
+message RegisterAuthRequest {
+  string email = 1;
+  string fullName = 2;
+  string address = 3;
+  string phoneNumber = 4;
+  double latitude = 5;
+  double longitude = 6;
+  string role = 7;
+}
+
+message RegisterAuthGoogle {
+  string email = 1;
+  string displayName = 2;
+  string address = 3;
+  string phoneNumber = 4;
+  string type = 5;
+  double longitude = 6;
+  double latitude = 7;
+  repeated int32 strengths = 8;
+  repeated int32 skills = 9;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+message User {
+  int32 id = 1;
+  string full_name = 2;
+  string address = 3;
+  string email = 4;
+  double latitude = 5;
+  double longitude = 6;
+  string phone_number = 7;
+  string role = 8;
+  string type = 9;
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message AuthResponse {
+  User user = 1;
+  string accessToken = 2;
+  string refreshToken = 3;
+  string csrfToken = 4;
+}
