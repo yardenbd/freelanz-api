@@ -6,9 +6,9 @@ import { User } from '../../../../libs/database/src/models/user.model';
 @Injectable()
 export class TwilioService {
   private twilioClient: Twilio;
-  private readonly sid = 'AC22093ada02be4e9268dc897e4f3936a2';
-  private readonly authToken = 'e1bc23d846312a614b161f116b46ed2e';
-  private readonly service = 'VAc7f260caec30bc57661a293abdb31118';
+  private readonly sid = '';
+  private readonly authToken = '';
+  private readonly service = '';
 
   constructor() {
     this.twilioClient = new Twilio(this.sid, this.authToken);
