@@ -28,7 +28,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('/load-user')
   async loadUser(@Req() req: Request) {
-    console.log(req.user.userId);
     return firstValueFrom(this.authService.loadUser(req.user.userId));
   }
 

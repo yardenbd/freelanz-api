@@ -27,7 +27,6 @@ interface IAuthentictedResponse {
   user: User;
   accessToken: string;
   refreshToken: string;
-  csrfToken: string;
 }
 
 @Injectable()
@@ -111,7 +110,6 @@ export class AuthService {
         email: user.email,
         userId: user.id,
       }),
-      csrfToken: this.generateCsrfToken(user.id),
     };
   }
 
@@ -130,7 +128,6 @@ export class AuthService {
       user: user.toJSON(),
       accessToken: this.generateAccessToken({ userId: user.id, email }),
       refreshToken: this.generateRefreshToken({ userId: user.id, email }),
-      csrfToken: this.generateCsrfToken(user.id),
     };
   }
 
@@ -207,19 +204,6 @@ export class AuthService {
       expiresIn: '30d',
     });
     return refreshToken;
-  }
-
-  generateCsrfToken(userId: number): string {
-    const token = crypto
-      .createHmac('sha256', this.secret)
-      .update('t' + userId)
-      .digest('hex');
-    return token;
-  }
-
-  validateCsrfToken(userId: number, token: string): boolean {
-    const expectedToken = this.generateCsrfToken(userId);
-    return expectedToken === token;
   }
 
   validateAccessToken(token: string) {
