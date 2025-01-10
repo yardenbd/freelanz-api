@@ -68,6 +68,7 @@ export class AuthController {
 
   @GrpcMethod('AuthService', 'appleSignIn')
   async appleSignIn(data: AppleSsoDTO) {
+    console.log(data);
     return this.authService.appleSignIn(data);
   }
 

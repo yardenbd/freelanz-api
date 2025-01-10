@@ -30,7 +30,7 @@ export class GrpcExceptionFilter implements ExceptionFilter {
           );
           break;
         default:
-          console.log('in  the defalut');
+          console.log('in the defalut');
           httpException = new InternalServerErrorException(
             exception.message || 'Internal server error',
           );
@@ -46,7 +46,7 @@ export class GrpcExceptionFilter implements ExceptionFilter {
       });
       return;
     }
-
+    console.log('expepction', exception);
     response.status(exception.status).json({
       statusCode: exception.status,
       message: exception.response.message,

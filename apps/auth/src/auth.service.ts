@@ -121,7 +121,7 @@ export class AuthService {
       },
       defaults: {
         email,
-        full_name: data.fullName.middleName + ' ' + data.fullName.familyName,
+        name: data.fullName.middleName + ' ' + data.fullName.familyName,
       },
     });
     return {

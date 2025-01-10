@@ -11,9 +11,11 @@ import { SwipeModule } from './modules/swipe/swipe.module';
 import { WebsocketModule } from './modules/websocket/websocket.module';
 import { CleanupService } from './services/cleanup.service';
 import { ChatModule } from './modules/chat/chat.module';
+import { NestjsFormDataModule } from 'nestjs-form-data';
 
 @Module({
   imports: [
+    NestjsFormDataModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: path.resolve(__dirname, '../../../.env'),

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -19,7 +20,13 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { GrpcExceptionFilter } from '../../grpc-error-handler';
+import { SetMetadata } from '@nestjs/common';
 
+// Define the key for the metadata
+export const IS_PUBLIC_KEY = 'isPublic';
+
+// Create the decorator
+export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 @Controller('user')
 @UseGuards(JwtAuthGuard)
 @UseFilters(GrpcExceptionFilter)
@@ -27,7 +34,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('/skills')
+  @Public()
   async getSkills(@Query() query: { lang: string }) {
+    if (!query.lang) throw new BadRequestException('Language not provided');
     return this.userService.getSkills(query.lang);
   }
 
@@ -51,19 +60,18 @@ export class UserController {
   async updateUser(
     @UploadedFile() file: Express.Multer.File,
     @Req() req: Request,
-    @Body() reqBody: { data: UpdateUserDTO },
+    @Body() reqBody: UpdateUserDTO,
   ) {
-    const data = this.convertPartsToArray(reqBody.data);
     const fixedData = {
-      strengths: data.strengths || [],
-      skills: data.skills || [],
-      file: file || '',
+      strengths: reqBody.strengths,
+      skills: reqBody.skills,
+      file: file,
       userId: req.user.userId,
-      email: data.email || '',
-      name: data.name || '',
-      gender: data.gender || '',
-      dateOfBirth: data.dateOfBirth || '',
-      type: data.type || '',
+      email: reqBody.email,
+      name: reqBody.name,
+      gender: reqBody.gender,
+      dateOfBirth: reqBody.dateOfBirth,
+      type: reqBody.type,
     };
     return firstValueFrom(this.userService.updateUser(fixedData));
   }
