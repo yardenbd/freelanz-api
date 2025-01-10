@@ -73,6 +73,7 @@ export class UserController {
       dateOfBirth: reqBody.dateOfBirth,
       type: reqBody.type,
     };
+    console.log(fixedData);
     return firstValueFrom(this.userService.updateUser(fixedData));
   }
 }
