@@ -63,6 +63,12 @@ export class User extends Model {
   @Column({ type: DataTypes.STRING })
   public business_number: string;
 
+  @Column({ type: DataTypes.STRING(256) })
+  public cv_url: string;
+
+  @Column({ type: DataTypes.STRING(256) })
+  public id_url: string;
+
   public readonly created_at: Date;
   public readonly updated_at: Date;
   public readonly deleted_at: Date;

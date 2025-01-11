@@ -75,20 +75,22 @@ export class UserService {
     user.gender = data.gender || user.gender;
     user.type = data.type || user.type;
     await user.save();
-    if (data.skills)
+    if (data.skills) {
       await this.handleUserRelation(
         data.skills,
         data.userId,
         UserSkillLink,
         'skill_id',
       );
-    if (data.strengths)
+    }
+    if (data.strengths) {
       await this.handleUserRelation(
         data.strengths,
         data.userId,
         UserStrengthlLink,
         'strength_id',
       );
+    }
 
     // if (data.file) {
     //   aw;

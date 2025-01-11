@@ -43,7 +43,6 @@ export class UserService {
     try {
       const strengths = await Strength.findAll({
         attributes: [lang, 'id'],
-        limit: 100,
       });
       return strengths;
     } catch (err) {

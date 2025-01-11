@@ -9,6 +9,7 @@ import {
   Query,
   Req,
   UploadedFile,
+  UploadedFiles,
   UseFilters,
   UseGuards,
   UseInterceptors,
@@ -17,7 +18,7 @@ import { UserService } from './user.service';
 import { UpdateUserDTO } from '@libs/dto/user/update-user.dto';
 import { firstValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { GrpcExceptionFilter } from '../../grpc-error-handler';
 import { SetMetadata } from '@nestjs/common';
@@ -73,7 +74,27 @@ export class UserController {
       dateOfBirth: reqBody.dateOfBirth,
       type: reqBody.type,
     };
-    console.log(fixedData);
     return firstValueFrom(this.userService.updateUser(fixedData));
+  }
+
+  @Patch('/documents')
+  @UseInterceptors(FilesInterceptor('files'))
+  async updateDocuments(
+    @UploadedFiles() files: Express.Multer.File[],
+    @Req() req: Request,
+  ) {
+    console.log(files);
+    // const fixedData = {
+    //   strengths: reqBody.strengths,
+    //   skills: reqBody.skills,
+    //   file: file,
+    //   userId: req.user.userId,
+    //   email: reqBody.email,
+    //   name: reqBody.name,
+    //   gender: reqBody.gender,
+    //   dateOfBirth: reqBody.dateOfBirth,
+    //   type: reqBody.type,
+    // };
+    // return firstValueFrom(this.userService.updateUser(fixedData));
   }
 }
