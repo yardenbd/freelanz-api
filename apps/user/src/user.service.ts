@@ -74,6 +74,8 @@ export class UserService {
     user.date_of_birth = data.dateOfBirth || user.date_of_birth;
     user.gender = data.gender || user.gender;
     user.type = data.type || user.type;
+    user.latitude = data.latitude || user.latitude;
+    user.longitude = data.longitude || user.longitude;
     await user.save();
     if (data.skills) {
       await this.handleUserRelation(

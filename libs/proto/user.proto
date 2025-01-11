@@ -21,6 +21,8 @@ message UpdateUserRequest {
   string gender = 7;
   string dateOfBirth = 8;
   string type = 9;
+  double latitude = 10;     
+  double longitude = 11;
 }
 
 message RegisterUserRequest {

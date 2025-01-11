@@ -1,6 +1,8 @@
 import {
   IsArray,
   IsEmail,
+  IsLatitude,
+  IsLongitude,
   IsNumber,
   IsOptional,
   IsString,
@@ -39,4 +41,12 @@ export class UpdateUserDTO {
   @IsOptional()
   @IsString()
   dateOfBirth?: string;
+
+  @IsOptional()
+  @IsLongitude()
+  longitude?: number;
+
+  @IsOptional()
+  @IsLatitude()
+  latitude?: number;
 }
