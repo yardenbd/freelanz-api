@@ -135,4 +135,15 @@ export class JobController {
       throw Util.generateRpcError(err);
     }
   }
+
+  @GrpcMethod('JobService', 'getJobList')
+  async getJobList(data: { userId: number }) {
+    if (!data.userId) {
+      throw Util.generateRpcError({
+        code: status.INVALID_ARGUMENT,
+        message: 'User Id not provided',
+      });
+    }
+    return this.jobService.getJobList({ userId: data.userId });
+  }
 }

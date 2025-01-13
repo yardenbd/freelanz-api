@@ -15,6 +15,7 @@ export class GrpcExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
+    console.log('exception', exception);
     if (exception.code !== undefined) {
       let httpException: HttpException;
 

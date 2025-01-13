@@ -76,7 +76,6 @@ export class UserController {
       latitude: reqBody.latitude,
       longitude: reqBody.longitude,
     };
-    console.log(fixedData);
     return firstValueFrom(this.userService.updateUser(fixedData));
   }
 

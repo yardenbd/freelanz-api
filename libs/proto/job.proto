@@ -23,15 +23,19 @@ message CandidatesResponse {
 }
 
 message FoundedJob {
-  int32 id = 1;                 
-  string title = 2;             
-  double payment = 3;           
-  string address = 4;           
-  double distance = 5;          
-  int32 matching_skills = 6;    
-  int32 total_job_skills = 7;   
-  int32 matching_strengths = 8; 
-  int32 total_job_strengths = 9;
+  int32 id = 1;  
+  string jobTitle = 2;  
+  int32 jobPayment = 3;  
+  string jobAddress = 4; 
+  string jobDateStart = 5; 
+  double distance = 6;  
+  int32 matchingSkills = 7;  
+  int32 totalJobSkills = 8;  
+  int32 matchingStrengths = 9;  
+  int32 totalJobStrengths = 10;  
+  string jobSkills = 11;  
+  string jobStrengths = 12;
+  string userName = 13;
 }
 
 message GetJobsResponse {

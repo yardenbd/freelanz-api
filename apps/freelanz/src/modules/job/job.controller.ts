@@ -46,7 +46,7 @@ export class JobController {
 
   @Get()
   async getJobList(@Req() req: Request) {
-    return await firstValueFrom(
+    return firstValueFrom(
       this.jobService.getJobList({ userId: req.user.userId }),
     );
   }

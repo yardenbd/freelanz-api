@@ -218,19 +218,41 @@ export class JobService {
     //     job.payment DESC
     // LIMIT 20;
     // `;
-    const query = `CALL GetJobRecommendations(:user_id, :user_latitude, :user_longitude)`;
+    const query = `CALL GetJobRecommendations(:user_id, :user_latitude, :user_longitude, :distance_limit_km, :lang)`;
     const user = await User.findByPk(userId);
-    const resp = await Job.sequelize.query(query, {
+    const [rows] = await Job.sequelize.query(query, {
       replacements: {
         user_id: user.id,
         user_latitude: user.latitude,
         user_longitude: user.longitude,
+        distance_limit_km: 100,
+        lang: 'he',
       },
       type: QueryTypes.SELECT,
+      raw: true,
     });
-    return resp;
+    console.log(Object.values(rows)[0]);
+    return { jobs: Object.values(rows) };
   }
 
+  // ctt = {
+  //   id: 92,
+  //   title: 'Cook for Catering Event',
+  //   payment: 4000,
+  //   address: 'Rosh HaNikra, Israel',
+  //   distance: 27.752170157099076,
+  //   matching_skills: 1,
+  //   total_job_skills: 2,
+  //   matching_strengths: 0,
+  //   total_job_strengths: 3,
+  // };
+  // b = {
+  //   address: 'Rosh HaNikra, Israel',
+  //   distance: 27.752170157099076,
+  //   id: 92,
+  //   payment: 4000,
+  //   title: 'Cook for Catering Event',
+  // };
   async getCandidates(jobId: number) {
     const swipes = await Swipe.findAll({
       where: {
@@ -244,3 +266,148 @@ export class JobService {
     }
   }
 }
+[
+  {
+    '0': {
+      id: 92,
+      title: 'Cook for Catering Event',
+      payment: 4000,
+      address: 'Rosh HaNikra, Israel',
+      distance: 27.752170157099076,
+      matching_skills: 1,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 3,
+    },
+    '1': {
+      id: 56,
+      title: 'Tour Guide for Nature Hikes',
+      payment: 1500,
+      address: 'Carmel Forest, Haifa, Israel',
+      distance: 15.48428689980352,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 2,
+      total_job_strengths: 3,
+    },
+    '2': {
+      id: 77,
+      title: 'House Cleaner for One-Time Deep Clean',
+      payment: 600,
+      address: 'HaHistadrut Street 30, Haifa, Israel',
+      distance: 8.758014629058152,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 1,
+      total_job_strengths: 2,
+    },
+    '3': {
+      id: 90,
+      title: 'Interior Designer',
+      payment: 3500,
+      address: 'Tiberias, Israel',
+      distance: 42.04196105567827,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 1,
+      total_job_strengths: 3,
+    },
+    '4': {
+      id: 59,
+      title: 'Electrician for Appliance Installation',
+      payment: 1500,
+      address: 'Kiryat Ata, Israel',
+      distance: 3.525144132985604,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 2,
+    },
+    '5': {
+      id: 91,
+      title: 'Freight Unloader',
+      payment: 5000,
+      address: 'Haifa Port, Israel',
+      distance: 8.218998416621853,
+      matching_skills: 0,
+      total_job_skills: 1,
+      matching_strengths: 0,
+      total_job_strengths: 2,
+    },
+    '6': {
+      id: 89,
+      title: 'Handyman for Minor Repairs',
+      payment: 800,
+      address: 'Haifa, Israel',
+      distance: 9.485432244196398,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 3,
+    },
+    '7': {
+      id: 58,
+      title: 'Plumber for Pipe Repair',
+      payment: 900,
+      address: 'Old City, Acre, Israel',
+      distance: 9.585720411448358,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 3,
+    },
+    '8': {
+      id: 84,
+      title: 'Carpenter for Custom Furniture',
+      payment: 3000,
+      address: 'Kibbutz Yagur, Israel',
+      distance: 9.836754521547348,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 3,
+    },
+    '9': {
+      id: 51,
+      title: 'Landscaping Assistant',
+      payment: 1200,
+      address: 'Kfar Vradim, Israel',
+      distance: 23.746678174761115,
+      matching_skills: 0,
+      total_job_skills: 1,
+      matching_strengths: 0,
+      total_job_strengths: 3,
+    },
+    '10': {
+      id: 53,
+      title: 'House Painter',
+      payment: 3500,
+      address: 'Zichron Yaakov, Israel',
+      distance: 32.44863207284563,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 3,
+    },
+    '11': {
+      id: 66,
+      title: 'Security Guard for Event',
+      payment: 5000,
+      address: 'Amphitheater, Caesarea, Israel',
+      distance: 42.42916303971025,
+      matching_skills: 0,
+      total_job_skills: 2,
+      matching_strengths: 0,
+      total_job_strengths: 2,
+    },
+  },
+  {
+    fieldCount: 0,
+    affectedRows: 0,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+    changedRows: 0,
+  },
+];
