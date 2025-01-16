@@ -53,11 +53,14 @@ export class AuthController {
   async checkRefreshToken(@Req() req: Request) {
     const refreshToken = req.headers['x-refresh-token'];
     if (!refreshToken)
-      return new ForbiddenException('Refresh Token is invlalid or expired');
-
-    return await firstValueFrom(
-      this.authService.getNewAcsessToken(refreshToken as string),
-    );
+      throw new ForbiddenException('Refresh Token is invlalid or expired');
+    try {
+      return await firstValueFrom(
+        this.authService.getNewAcsessToken(refreshToken as string),
+      );
+    } catch (err) {
+      console.log('error in refresh', err);
+    }
   }
 
   @Post('/send-otp')

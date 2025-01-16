@@ -15,7 +15,6 @@ export class GrpcExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
-    console.log('exception', exception);
     if (exception.code !== undefined) {
       let httpException: HttpException;
 
@@ -31,7 +30,6 @@ export class GrpcExceptionFilter implements ExceptionFilter {
           );
           break;
         default:
-          console.log('in the defalut');
           httpException = new InternalServerErrorException(
             exception.message || 'Internal server error',
           );
@@ -40,14 +38,12 @@ export class GrpcExceptionFilter implements ExceptionFilter {
 
       const statusCode = httpException.getStatus();
       console.log('statusCode', statusCode);
-      response.status(statusCode).json({
+      return response.status(statusCode).json({
         statusCode,
         message: httpException.message,
         path: request.url,
       });
-      return;
     }
-    console.log('expepction', exception);
     response.status(exception.status).json({
       statusCode: exception.status,
       message: exception.response.message,
